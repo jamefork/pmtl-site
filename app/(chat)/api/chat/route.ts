@@ -7,6 +7,7 @@ import {
   streamText,
 } from 'ai';
 import { auth, type UserType } from '@/app/(auth)/auth';
+// QUAN TRỌNG: System prompt được import từ đây
 import { type RequestHints, systemPrompt } from '@/lib/ai/prompts';
 import {
   createStreamId,
@@ -153,6 +154,7 @@ export async function POST(request: Request) {
       execute: ({ writer: dataStream }) => {
         const result = streamText({
           model: myProvider.languageModel(selectedChatModel),
+          // QUAN TRỌNG: System prompt được gọi như một hàm ở đây
           system: systemPrompt({ selectedChatModel, requestHints }),
           messages: convertToModelMessages(uiMessages),
           stopWhen: stepCountIs(5),
